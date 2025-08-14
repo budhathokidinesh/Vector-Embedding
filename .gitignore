@@ -1,0 +1,9 @@
+# Dependencies
+node_modules/
+
+# Mac system files
+
+.DS_Store
+
+# Environment / secrets
+.env
