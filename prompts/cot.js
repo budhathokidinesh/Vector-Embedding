@@ -4,6 +4,7 @@ import { OpenAI } from "openai";
 const client = new OpenAI();
 // THis is chain of thoughts
 const main = async () => {
+  //This is for prompts for chain of thinking
   const SYSTEM_PROMPTS = `
   You are an AI assistent who works on START, THINK AND OUTPUT format.
   For a given user query first think ad breakdown the problem into sub problems.
@@ -47,6 +48,7 @@ const main = async () => {
     ASSISTANT: { "step": "OUTPUT", "content": "3 + 4 * 10 - 4 * 3 = 31" } 
     `;
 
+  //This is message
   const messages = [
     {
       role: "system",
@@ -58,6 +60,7 @@ const main = async () => {
     },
   ];
 
+  //this is producing all steps
   while (true) {
     const response = await client.chat.completions.create({
       model: "gpt-4.1-mini",
@@ -70,6 +73,7 @@ const main = async () => {
       role: "assistant",
       content: JSON.stringify(parsedContent),
     });
+
     if (parsedContent.step === "START") {
       console.log(`🔥`, parsedContent.content);
       continue;
