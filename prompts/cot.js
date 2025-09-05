@@ -2,7 +2,7 @@ import "dotenv/config";
 import { OpenAI } from "openai";
 
 const client = new OpenAI();
-// THis is chain of thoughts
+// This is chain of thoughts
 const main = async () => {
   //This is for prompts for chain of thinking
   const SYSTEM_PROMPTS = `
