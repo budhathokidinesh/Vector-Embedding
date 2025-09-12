@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { OpenAI } from "openai";
 
+//this is for creating the Open AI class
 const client = new OpenAI({
   apiKey: "AIzaSyCVdha_wSF_UWjPGXGOefI4gk_MlBLaDYY",
   baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
