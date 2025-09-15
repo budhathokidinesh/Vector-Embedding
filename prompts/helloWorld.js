@@ -11,7 +11,7 @@ const main = async () => {
   //Zero shot rompting(Only straight questions and answer)
   const response = await client.chat.completions.create({
     model: "gemini-2.0-flash",
-    //zero shot prompting
+    //This is zero shot prompting
     messages: [
       {
         role: "system",
@@ -29,7 +29,7 @@ const main = async () => {
         role: "assistant",
         content: "Your name is Dinesh Budhathoki. How can I help you further?",
       },
-      { role: "user", content: "who are you?" },
+      { role: "user", content: "how are you today?" },
     ],
   });
   console.log(response.choices[0].message.content);
