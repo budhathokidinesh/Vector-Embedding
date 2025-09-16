@@ -48,7 +48,7 @@ const main = async () => {
     ASSISTANT: { "step": "OUTPUT", "content": "3 + 4 * 10 - 4 * 3 = 31" } 
     `;
 
-  //This is message
+  //This is message In message we sould incude system promt and user
   const messages = [
     {
       role: "system",
