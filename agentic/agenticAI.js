@@ -1,48 +1,48 @@
 import "dotenv/config";
 import { OpenAI } from "openai";
 import axios from "axios";
-
-import { exec } from "child_process";
+// import { exec } from "child_process";
 
 async function getWeatherDetailsByCity(cityname = "") {
   const url = `https://wttr.in/${cityname.toLowerCase()}?format=%C+%t`;
   const { data } = await axios.get(url, { responseType: "text" });
   return `The current weather of ${cityname} is ${data}`;
 }
+// getWeatherDetailsByCity("Gaighat").then(console.log);
 
-async function executeCommand(cmd = "") {
-  return new Promise((res, rej) => {
-    exec(cmd, (error, data) => {
-      if (error) {
-        return res(`Error running command ${error}`);
-      } else {
-        res(data);
-      }
-    });
-  });
-}
+// async function executeCommand(cmd = "") {
+//   return new Promise((res, rej) => {
+//     exec(cmd, (error, data) => {
+//       if (error) {
+//         return res(`Error running command ${error}`);
+//       } else {
+//         res(data);
+//       }
+//     });
+//   });
+// }
 
-async function getGithubUserInfoByUsername(username = "") {
-  const url = `https://api.github.com/users/${username.toLowerCase()}`;
-  const { data } = await axios.get(url);
-  return JSON.stringify({
-    login: data.login,
-    id: data.id,
-    name: data.name,
-    location: data.location,
-    twitter_username: data.twitter_username,
-    public_repos: data.public_repos,
-    public_gists: data.public_gists,
-    user_view_type: data.user_view_type,
-    followers: data.followers,
-    following: data.following,
-  });
-}
+// async function getGithubUserInfoByUsername(username = "") {
+//   const url = `https://api.github.com/users/${username.toLowerCase()}`;
+//   const { data } = await axios.get(url);
+//   return JSON.stringify({
+//     login: data.login,
+//     id: data.id,
+//     name: data.name,
+//     location: data.location,
+//     twitter_username: data.twitter_username,
+//     public_repos: data.public_repos,
+//     public_gists: data.public_gists,
+//     user_view_type: data.user_view_type,
+//     followers: data.followers,
+//     following: data.following,
+//   });
+// }
 
 const TOOL_MAP = {
   getWeatherDetailsByCity: getWeatherDetailsByCity,
-  getGithubUserInfoByUsername: getGithubUserInfoByUsername,
-  executeCommand: executeCommand,
+  // getGithubUserInfoByUsername: getGithubUserInfoByUsername,
+  // executeCommand: executeCommand,
 };
 
 const client = new OpenAI();
@@ -94,8 +94,7 @@ async function main() {
     },
     {
       role: "user",
-      content:
-        "In the current directly, read the changes via git and push the changes to github with good commit message",
+      content: "What food you suggest according to the weather of perth? ",
     },
   ];
 
