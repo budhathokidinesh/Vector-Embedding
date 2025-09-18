@@ -22,26 +22,26 @@ async function getWeatherDetailsByCity(cityname = "") {
 //   });
 // }
 
-// async function getGithubUserInfoByUsername(username = "") {
-//   const url = `https://api.github.com/users/${username.toLowerCase()}`;
-//   const { data } = await axios.get(url);
-//   return JSON.stringify({
-//     login: data.login,
-//     id: data.id,
-//     name: data.name,
-//     location: data.location,
-//     twitter_username: data.twitter_username,
-//     public_repos: data.public_repos,
-//     public_gists: data.public_gists,
-//     user_view_type: data.user_view_type,
-//     followers: data.followers,
-//     following: data.following,
-//   });
-// }
+async function getGithubUserInfoByUsername(username = "") {
+  const url = `https://api.github.com/users/${username.toLowerCase()}`;
+  const { data } = await axios.get(url);
+  return JSON.stringify({
+    login: data.login,
+    id: data.id,
+    name: data.name,
+    location: data.location,
+    twitter_username: data.twitter_username,
+    public_repos: data.public_repos,
+    public_gists: data.public_gists,
+    user_view_type: data.user_view_type,
+    followers: data.followers,
+    following: data.following,
+  });
+}
 
 const TOOL_MAP = {
   getWeatherDetailsByCity: getWeatherDetailsByCity,
-  // getGithubUserInfoByUsername: getGithubUserInfoByUsername,
+  getGithubUserInfoByUsername: getGithubUserInfoByUsername,
   // executeCommand: executeCommand,
 };
 
@@ -94,7 +94,7 @@ async function main() {
     },
     {
       role: "user",
-      content: "What food you suggest according to the weather of perth? ",
+      content: "does budhathokidinesh has readme.md file? ",
     },
   ];
 
