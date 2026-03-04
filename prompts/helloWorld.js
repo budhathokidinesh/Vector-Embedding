@@ -34,4 +34,5 @@ const main = async () => {
   });
   console.log(response.choices[0].message.content);
 };
+//finally calling the class
 main();
