@@ -3,14 +3,13 @@ import { OpenAI } from "openai";
 
 //this is for creating the Open AI class
 const client = new OpenAI({
-  apiKey: "AIzaSyCVdha_wSF_UWjPGXGOefI4gk_MlBLaDYY",
-  baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const main = async () => {
   //Zero shot rompting(Only straight questions and answer)
   const response = await client.chat.completions.create({
-    model: "gemini-2.0-flash",
+    model: "gpt-4.1-mini",
     //This is zero shot prompting
     messages: [
       {
