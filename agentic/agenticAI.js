@@ -4,11 +4,16 @@ import { OpenAI } from "openai";
 import axios from "axios";
 // import { exec } from "child_process";
 
-async function getWeatherDetailsByCity(cityname = "") {
+// async function getWeatherDetailsByCity(cityname = "") {
+//   const url = `https://wttr.in/${cityname.toLowerCase()}?format=%C+%t`;
+//   const { data } = await axios.get(url, { responseType: "text" });
+//   return `The current weather of ${cityname} is ${data}`;
+// }
+const getWeatherDetailsByCity = async (cityname = "") => {
   const url = `https://wttr.in/${cityname.toLowerCase()}?format=%C+%t`;
   const { data } = await axios.get(url, { responseType: "text" });
   return `The current weather of ${cityname} is ${data}`;
-}
+};
 // getWeatherDetailsByCity("Gaighat").then(console.log);
 
 // async function executeCommand(cmd = "") {
@@ -23,34 +28,31 @@ async function getWeatherDetailsByCity(cityname = "") {
 //   });
 // }
 
-async function getGithubUserInfoByUsername(username = "") {
-  const url = `https://api.github.com/users/${username.toLowerCase()}`;
-  const { data } = await axios.get(url);
-  return JSON.stringify({
-    login: data.login,
-    id: data.id,
-    name: data.name,
-    location: data.location,
-    twitter_username: data.twitter_username,
-    public_repos: data.public_repos,
-    public_gists: data.public_gists,
-    user_view_type: data.user_view_type,
-    followers: data.followers,
-    following: data.following,
-  });
-}
+// async function getGithubUserInfoByUsername(username = "") {
+//   const url = `https://api.github.com/users/${username.toLowerCase()}`;
+//   const { data } = await axios.get(url);
+//   return JSON.stringify({
+//     login: data.login,
+//     id: data.id,
+//     name: data.name,
+//     location: data.location,
+//     twitter_username: data.twitter_username,
+//     public_repos: data.public_repos,
+//     public_gists: data.public_gists,
+//     user_view_type: data.user_view_type,
+//     followers: data.followers,
+//     following: data.following,
+//   });
+// }
 
 const TOOL_MAP = {
   getWeatherDetailsByCity: getWeatherDetailsByCity,
-  getGithubUserInfoByUsername: getGithubUserInfoByUsername,
+  // getGithubUserInfoByUsername: getGithubUserInfoByUsername,
   // executeCommand: executeCommand,
 };
 
 const client = new OpenAI();
-
-async function main() {
-  // These api calls are stateless (Chain Of Thought)
-  const SYSTEM_PROMPT = `
+const SYSTEM_PROMPT = `
     You are an AI assistant who works on START, THINK and OUTPUT format.
     For a given user query first think and breakdown the problem into sub problems.
     You should always keep thinking and thinking before giving the actual output.
@@ -77,17 +79,20 @@ async function main() {
     { "step": "START | THINK | OUTPUT | OBSERVE | TOOL" , "content": "string", "tool_name": "string", "input": "STRING" }
 
     Example:
-    User: Hey, can you tell me weather of Patiala?
-    ASSISTANT: { "step": "START", "content": "The user is intertested in the current weather details about Patiala" } 
+    User: Hey, can you tell me weather of Kathmandu?
+    ASSISTANT: { "step": "START", "content": "The user is intertested in the current weather details about Kathmandu" } 
     ASSISTANT: { "step": "THINK", "content": "Let me see if there is any available tool for this query" } 
     ASSISTANT: { "step": "THINK", "content": "I see that there is a tool available getWeatherDetailsByCity which returns current weather data" } 
     ASSISTANT: { "step": "THINK", "content": "I need to call getWeatherDetailsByCity for city patiala to get weather details" }
-    ASSISTANT: { "step": "TOOL", "input": "patiala", "tool_name": "getWeatherDetailsByCity" }
+    ASSISTANT: { "step": "TOOL", "input": "Kathmandu", "tool_name": "getWeatherDetailsByCity" }
     DEVELOPER: { "step": "OBSERVE", "content": "The weather of patiala is cloudy with 27 Cel" }
     ASSISTANT: { "step": "THINK", "content": "Great, I got the weather details of Patiala" }
     ASSISTANT: { "step": "OUTPUT", "content": "The weather in Patiala is 27 C with little cloud. Please make sure to carry an umbrella with you. ☔️" }
   `;
+async function main() {
+  // These api calls are stateless (Chain Of Thought)
 
+  //This is the message what to give to user
   const messages = [
     {
       role: "system",
@@ -95,7 +100,7 @@ async function main() {
     },
     {
       role: "user",
-      content: "does budhathokidinesh has readme.md file? ",
+      content: "What should I wear according to weather of Kathmandu?",
     },
   ];
 
@@ -151,7 +156,7 @@ async function main() {
     }
   }
 
-  console.log("Done...");
+  console.log("Have a Nice day!");
 }
 
 main();
