@@ -1,4 +1,5 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
 import { OpenAI } from "openai";
 import axios from "axios";
 // import { exec } from "child_process";
@@ -135,7 +136,7 @@ async function main() {
       const responseFromTool = await TOOL_MAP[toolToCall](parsedContent.input);
       console.log(
         `🛠️: ${toolToCall}(${parsedContent.input}) = `,
-        responseFromTool
+        responseFromTool,
       );
       messages.push({
         role: "developer",

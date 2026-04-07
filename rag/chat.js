@@ -11,7 +11,7 @@ dotenv.config({ path: path.join(__dirname, "../.env") });
 const client = new OpenAI();
 
 async function chat() {
-  const userQuery = "Who is mahesh?";
+  const userQuery = "Who is dinesh?";
   //ready the openai embedding model
   const embeddings = new OpenAIEmbeddings({
     model: "text-embedding-3-large",
