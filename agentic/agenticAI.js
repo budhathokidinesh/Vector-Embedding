@@ -3,6 +3,7 @@ dotenv.config();
 import { OpenAI } from "openai";
 import axios from "axios";
 import { exec } from "child_process";
+import fs from "fs";
 
 //This is for live weather information of certain city
 
@@ -22,7 +23,6 @@ const getWeatherDetailsByCity = async (cityname = "") => {
 // getWeatherDetailsByCity("Gaighat").then(console.log);
 
 //This for execute the linux
-
 async function executeCommand(cmd = "") {
   return new Promise((res, rej) => {
     exec(cmd, (error, data) => {
@@ -52,11 +52,21 @@ async function getGithubUserInfoByUsername(username = "") {
     following: data.following,
   });
 }
+//This is tool to write readme file
+const writeReadmeFile = (content = "") => {
+  try {
+    fs.writeFileSync("README.md", content, "utf-8");
+    return "README.md has been successfully created";
+  } catch (error) {
+    return `Error writing README.md: ${error.message}`;
+  }
+};
 
 const TOOL_MAP = {
   getWeatherDetailsByCity: getWeatherDetailsByCity,
   getGithubUserInfoByUsername: getGithubUserInfoByUsername,
   executeCommand: executeCommand,
+  writeReadmeFile: writeReadmeFile,
 };
 
 const client = new OpenAI();
@@ -78,6 +88,7 @@ async function main() {
     - getWeatherDetailsByCity(cityname: string): Returns the current weather data of the city.
     - getGithubUserInfoByUsername(username: string): Retuns the public info about the github user using github api
     - executeCommand(command: string): Takes a linux / unix command as arg and executes the command on user's machine and returns the output
+    - writeReadmeFile(content: string): Writes the given content into a README.md file
 
     Rules:
     - Strictly follow the output JSON format
@@ -108,7 +119,24 @@ async function main() {
     },
     {
       role: "user",
-      content: `Hey, create a folder todo_app and create a simple todo application using html, css and js`,
+      content: `Generate a README.md file for my project located /Users/dineshbudhathoki/Lab/GenAI/Tokenization
+      First use executeCommand to run "ls -la /Users/dineshbudhathoki/Lab/GenAI/Tokenization" to see structure,
+      then use executeCommand to read important files like package.json,
+      The README.md must include:
+          1. Project title with badges (license, node version, npm)
+          2. Short description
+          3. Table of contents
+          4. Features list
+          5. Prerequisites
+          6. Installation steps
+          7. Environment variables setup (.env example)
+          8. Usage with code examples
+          9. Project folder structure
+          10. Dependencies explanation
+          11. Contributing guidelines
+          12. License
+          13. Author with GitHub/social links,
+      Make it detailed, professional and well formatted with emojis.`,
     },
   ];
 
