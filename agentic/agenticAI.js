@@ -2,57 +2,68 @@ import dotenv from "dotenv";
 dotenv.config();
 import { OpenAI } from "openai";
 import axios from "axios";
-// import { exec } from "child_process";
+import { exec } from "child_process";
+
+//This is for live weather information of certain city
 
 // async function getWeatherDetailsByCity(cityname = "") {
 //   const url = `https://wttr.in/${cityname.toLowerCase()}?format=%C+%t`;
 //   const { data } = await axios.get(url, { responseType: "text" });
 //   return `The current weather of ${cityname} is ${data}`;
 // }
+//This is for same function but arrow function
+
 const getWeatherDetailsByCity = async (cityname = "") => {
   const url = `https://wttr.in/${cityname.toLowerCase()}?format=%C+%t`;
+  // const url = `https://wttr.in/Kathmandu?format=%C+%t`;
   const { data } = await axios.get(url, { responseType: "text" });
   return `The current weather of ${cityname} is ${data}`;
 };
 // getWeatherDetailsByCity("Gaighat").then(console.log);
 
-// async function executeCommand(cmd = "") {
-//   return new Promise((res, rej) => {
-//     exec(cmd, (error, data) => {
-//       if (error) {
-//         return res(`Error running command ${error}`);
-//       } else {
-//         res(data);
-//       }
-//     });
-//   });
-// }
+//This for execute the linux
 
-// async function getGithubUserInfoByUsername(username = "") {
-//   const url = `https://api.github.com/users/${username.toLowerCase()}`;
-//   const { data } = await axios.get(url);
-//   return JSON.stringify({
-//     login: data.login,
-//     id: data.id,
-//     name: data.name,
-//     location: data.location,
-//     twitter_username: data.twitter_username,
-//     public_repos: data.public_repos,
-//     public_gists: data.public_gists,
-//     user_view_type: data.user_view_type,
-//     followers: data.followers,
-//     following: data.following,
-//   });
-// }
+async function executeCommand(cmd = "") {
+  return new Promise((res, rej) => {
+    exec(cmd, (error, data) => {
+      if (error) {
+        return res(`Error running command ${error}`);
+      } else {
+        res(data);
+      }
+    });
+  });
+}
+
+//This is for public information of the github with username
+async function getGithubUserInfoByUsername(username = "") {
+  const url = `https://api.github.com/users/${username.toLowerCase()}`;
+  const { data } = await axios.get(url);
+  return JSON.stringify({
+    login: data.login,
+    id: data.id,
+    name: data.name,
+    location: data.location,
+    twitter_username: data.twitter_username,
+    public_repos: data.public_repos,
+    public_gists: data.public_gists,
+    user_view_type: data.user_view_type,
+    followers: data.followers,
+    following: data.following,
+  });
+}
 
 const TOOL_MAP = {
   getWeatherDetailsByCity: getWeatherDetailsByCity,
-  // getGithubUserInfoByUsername: getGithubUserInfoByUsername,
-  // executeCommand: executeCommand,
+  getGithubUserInfoByUsername: getGithubUserInfoByUsername,
+  executeCommand: executeCommand,
 };
 
 const client = new OpenAI();
-const SYSTEM_PROMPT = `
+
+async function main() {
+  // These api calls are stateless (Chain Of Thought)
+  const SYSTEM_PROMPT = `
     You are an AI assistant who works on START, THINK and OUTPUT format.
     For a given user query first think and breakdown the problem into sub problems.
     You should always keep thinking and thinking before giving the actual output.
@@ -89,9 +100,6 @@ const SYSTEM_PROMPT = `
     ASSISTANT: { "step": "THINK", "content": "Great, I got the weather details of Patiala" }
     ASSISTANT: { "step": "OUTPUT", "content": "The weather in Patiala is 27 C with little cloud. Please make sure to carry an umbrella with you. ☔️" }
   `;
-async function main() {
-  // These api calls are stateless (Chain Of Thought)
-
   //This is the message what to give to user
   const messages = [
     {
@@ -100,7 +108,7 @@ async function main() {
     },
     {
       role: "user",
-      content: "What should I wear according to weather of Kathmandu?",
+      content: `Hey, create a folder todo_app and create a simple todo application using html, css and js`,
     },
   ];
 
