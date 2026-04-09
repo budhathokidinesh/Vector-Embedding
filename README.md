@@ -1,4 +1,4 @@
-# -tokenization 🚀
+# Agentic AI Practice 🚀
 
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC) [![Node Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)](https://nodejs.org/) [![npm](https://img.shields.io/badge/npm-latest-orange)](https://www.npmjs.com/)
 
@@ -6,7 +6,7 @@
 
 ## Description
 
--tokenization is a Node.js project demonstrating token encoding and decoding using the `js-tiktoken` library, designed to offer efficient tokenization utilities powered by state-of-the-art algorithms.
+-Agentic AI Practice is a Node.js project demonstrating token encoding and decoding using the `js-tiktoken` library, designed to offer efficient tokenization utilities powered by state-of-the-art algorithms.
 
 ---
 
@@ -47,8 +47,7 @@
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/tokenization.git
-cd tokenization
+git clone https://github.com/budhathokidinesh/Vector-Embedding
 ```
 
 Install dependencies:
